@@ -9,14 +9,15 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const Home = () => {
+const Home = ({ type }) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     // we are creating function here because we cant use async in useEffect
     const fetchVideos = async () => {
       try {
-        const res = await axios.get('http://localhost:8800/api/videos/random');
+        const res = await axios.get(`http://localhost:8800/api/videos/${type}`);
+        console.log(res.data);
         setVideos(res.data);
       } catch (error) {
         console.log(error.message);
@@ -24,12 +25,12 @@ const Home = () => {
     };
 
     fetchVideos();
-  }, []);
+  }, [type]);
 
   return (
     <Container>
       {videos.map((video) => (
-        <Card />
+        <Card key={video._id} video={video} />
       ))}
     </Container>
   );
