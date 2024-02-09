@@ -88,7 +88,7 @@ const Navbar = () => {
           {currentUser ? (
             <User>
               <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
-              <Avatar src={currentUser.img} />
+              <Avatar referrerpolicy="no-referrer" src={currentUser.img} />
               {currentUser.name}
             </User>
           ) : (
