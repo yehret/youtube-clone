@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../redux/userSlice.js';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -67,6 +68,7 @@ const Link = styled.span`
 `;
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -76,8 +78,13 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post('http://localhost:8800/api/auth/signin', { name, password });
+      const res = await axios.post(
+        'http://localhost:8800/api/auth/signin',
+        { name, password },
+        { withCredentials: true, credentials: 'include' },
+      );
       dispatch(loginSuccess(res.data));
+      navigate('/');
     } catch (error) {
       dispatch(loginFailure());
     }

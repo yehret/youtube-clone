@@ -60,7 +60,6 @@ const Card = ({ type, video }) => {
     const fetchVideos = async () => {
       try {
         const res = await axios.get(`http://localhost:8800/api/users/find/${video.userId}`);
-        console.log(res.data);
         setChannel(res.data);
       } catch (error) {
         console.log(error.message);

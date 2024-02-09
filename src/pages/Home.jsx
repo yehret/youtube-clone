@@ -16,8 +16,9 @@ const Home = ({ type }) => {
     // we are creating function here because we cant use async in useEffect
     const fetchVideos = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/api/videos/${type}`);
-        console.log(res.data);
+        const res = await axios.get(`http://localhost:8800/api/videos/${type}`, {
+          withCredentials: true,
+        });
         setVideos(res.data);
       } catch (error) {
         console.log(error.message);
