@@ -134,11 +134,17 @@ const Video = () => {
   }, [path, dispatch]);
 
   const handleLike = async () => {
-    await axios.put(`http://localhost:8800/api/users/like/${currentVideo._id}`);
+    await axios.put(`http://localhost:8800/api/users/like/${currentVideo._id}`, null, {
+      withCredentials: true,
+      credentials: 'include',
+    });
     dispatch(like(currentUser._id));
   };
   const handleDislike = async () => {
-    await axios.put(`http://localhost:8800/api/users/dislike/${currentVideo._id}`);
+    await axios.put(`http://localhost:8800/api/users/dislike/${currentVideo._id}`, null, {
+      withCredentials: true,
+      credentials: 'include',
+    });
     dispatch(dislike(currentUser._id));
   };
 
