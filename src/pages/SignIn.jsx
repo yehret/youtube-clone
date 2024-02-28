@@ -97,11 +97,15 @@ const SignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         axios
-          .post('http://localhost:8800/api/auth/google', {
-            name: result.user.displayName,
-            email: result.user.email,
-            img: result.user.photoURL,
-          })
+          .post(
+            'http://localhost:8800/api/auth/google',
+            {
+              name: result.user.displayName,
+              email: result.user.email,
+              img: result.user.photoURL,
+            },
+            { withCredentials: true, credentials: 'include' },
+          )
           .then((res) => {
             dispatch(loginSuccess(res.data));
           });
