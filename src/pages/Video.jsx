@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { dislike, fetchSuccess, like } from '../redux/videoSlice';
+import { subscription } from '../redux/userSlice';
 
 const Container = styled.div`
   display: flex;
@@ -134,18 +135,31 @@ const Video = () => {
   }, [path, dispatch]);
 
   const handleLike = async () => {
-    await axios.put(`http://localhost:8800/api/users/like/${currentVideo._id}`, null, {
+    await axios.put(`http://localhost:8800/api/users/like/${currentVideo?._id}`, null, {
       withCredentials: true,
       credentials: 'include',
     });
     dispatch(like(currentUser._id));
   };
   const handleDislike = async () => {
-    await axios.put(`http://localhost:8800/api/users/dislike/${currentVideo._id}`, null, {
+    await axios.put(`http://localhost:8800/api/users/dislike/${currentVideo?._id}`, null, {
       withCredentials: true,
       credentials: 'include',
     });
     dispatch(dislike(currentUser._id));
+  };
+
+  const handleSub = async () => {
+    currentUser.subscribedUsers.includes(channel._id)
+      ? await axios.put(`http://localhost:8800/api/users/unsub/${channel._id}`, null, {
+          withCredentials: true,
+          credentials: 'include',
+        })
+      : await axios.put(`http://localhost:8800/api/users/sub/${channel._id}`, null, {
+          withCredentials: true,
+          credentials: 'include',
+        });
+    dispatch(subscription(channel._id));
   };
 
   return (
@@ -166,7 +180,7 @@ const Video = () => {
           <Info>{currentVideo?.views} views • Jun 22, 2022</Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo?.likes?.includes(currentUser._id) ? (
+              {currentVideo?.likes?.includes(currentUser?._id) ? (
                 <ThumbUpIcon />
               ) : (
                 <ThumbUpOutlinedIcon />
@@ -174,7 +188,7 @@ const Video = () => {
               {currentVideo?.likes?.length}
             </Button>
             <Button onClick={handleDislike}>
-              {currentVideo?.dislikes?.includes(currentUser._id) ? (
+              {currentVideo?.dislikes?.includes(currentUser?._id) ? (
                 <ThumbDown />
               ) : (
                 <ThumbDownOffAltOutlinedIcon />
@@ -199,7 +213,9 @@ const Video = () => {
               <Description>{currentVideo?.description}</Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe>SUBSCRIBE</Subscribe>
+          <Subscribe onClick={handleSub}>
+            {currentUser.subscribedUsers?.includes(channel._id) ? 'SUBSCRIBED' : 'SUBSCRIBE'}
+          </Subscribe>
         </Channel>
         <Hr />
         <Comments />
