@@ -5,6 +5,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Upload from './Upload';
 
 const Container = styled.div`
   position: sticky;
@@ -87,7 +88,7 @@ const Navbar = () => {
           </Search>
           {currentUser ? (
             <User>
-              <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
+              <VideoCallOutlinedIcon style={{ cursor: 'pointer' }} onClick={() => setOpen(true)} />
               <Avatar referrerpolicy="no-referrer" src={currentUser.img} />
               {currentUser.name}
             </User>
@@ -101,6 +102,7 @@ const Navbar = () => {
           )}
         </Wrapper>
       </Container>
+      {open && <Upload setOpen={setOpen} />}
     </>
   );
 };
