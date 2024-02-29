@@ -153,7 +153,7 @@ const Upload = ({ setOpen }) => {
           <Input type="file" accept="video/*" onChange={(e) => setVideo(e.target.files[0])} />
         )}
         <Input type="text" placeholder="Title" name="title" onChange={handleChange} />
-        <Desc placeholder="Description" name="desc" rows={8} onChange={handleChange} />
+        <Desc placeholder="description" name="description" rows={8} onChange={handleChange} />
         <Input type="text" placeholder="Separate the tags with commas." onChange={handleTags} />
         <Label>Image:</Label>
         {imgPerc > 0 ? (
