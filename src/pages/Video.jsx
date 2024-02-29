@@ -13,6 +13,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { dislike, fetchSuccess, like } from '../redux/videoSlice';
 import { subscription } from '../redux/userSlice';
+import { format } from 'timeago.js';
 
 const Container = styled.div`
   display: flex;
@@ -176,7 +177,9 @@ const Video = () => {
         </VideoWrapper>
         <Title>{currentVideo?.title}</Title>
         <Details>
-          <Info>{currentVideo?.views} views • Jun 22, 2022</Info>
+          <Info>
+            {currentVideo?.views} views • {format(currentVideo.createdAt)}
+          </Info>
           <Buttons>
             <Button onClick={handleLike}>
               {currentVideo?.likes?.includes(currentUser?._id) ? (
